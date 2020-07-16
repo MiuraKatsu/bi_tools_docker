@@ -12,6 +12,7 @@ up: docker-up
 down: docker-down
 kill: docker-kill
 clean: docker-kill docker-clean
+logs: docker-logs
 
 docker-build:	##@development build images
 	$(DOCKER_COMPOSE) -p $(PROJECT_NAME) build --force-rm
@@ -24,6 +25,8 @@ docker-kill:	##@development kill process
 docker-clean:	 ##@development remove all containers in stack
 	$(DOCKER_COMPOSE) -p $(PROJECT_NAME) rm -fv --all
 	$(DOCKER_COMPOSE) down --rmi local --remove-orphans
+docker-logs:
+	$(DOCKER_COMPOSE) logs
 
 docker-ls:
 	$(DOCKER) container ls -a

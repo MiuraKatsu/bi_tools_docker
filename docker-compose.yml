@@ -5,16 +5,15 @@ services:
     build         : ./jupyter
     hostname      : 'jupyter'
     container_name: 'jupyter'
-    working_dir   : '/home/python'
-    env_file      :
-      - ./jupyter/.my.env
+    #working_dir   : '/home/python'
+    working_dir   : '/opt/jupyter'
     tty           : true
     volumes       :
       - ~/.ssh:/root/.ssh
-      - ./jupyter:/home/python
+      - ./jupyter:/opt/jupyter
     ports         :
       - "8888:8888"
-    command       : jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token='' --port=8888 
+    command       : jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token='' --port=8888
 
   metabase:
     image         : metabase/metabase
