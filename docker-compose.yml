@@ -5,12 +5,11 @@ services:
     build         : ./jupyter
     hostname      : 'jupyter'
     container_name: 'jupyter'
-    #working_dir   : '/home/python'
     working_dir   : '/opt/jupyter'
     tty           : true
     volumes       :
       - ~/.ssh:/root/.ssh
-      - ./jupyter:/opt/jupyter
+      - ./jupyter/notebook:/opt/jupyter
     ports         :
       - "8888:8888"
     command       : jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token='' --port=8888
@@ -37,3 +36,13 @@ services:
       MYSQL_ROOT_PASSWORD: password
     ports:
       - '33061:3306'
+
+  mailhog:
+    image         : mailhog/mailhog
+    hostname      : mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"
+    volumes       :
+      - ./mailhog/auth.file:/auth.file
+    command       : -auth-file=/auth.file
