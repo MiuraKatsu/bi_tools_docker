@@ -7,6 +7,8 @@ OPEN_CMD ?= open
 GROUP ?= all
 PROJECT_NAME ?= bi_tools_docker
 
+ARG ?= password
+
 build: docker-build
 up: docker-up 
 down: docker-down
@@ -39,3 +41,7 @@ bash-mysql:
 	$(DOCKER_COMPOSE) -p $(PROJECT_NAME) exec mysql bash
 bash-metabase:
 	$(DOCKER_COMPOSE) -p $(PROJECT_NAME) exec metabase bash
+sh-mailhog:
+	$(DOCKER_COMPOSE) -p $(PROJECT_NAME) exec mailhog sh
+mailhog-passwd:
+	echo 'mailhog:'`$(DOCKER_COMPOSE) -p $(PROJECT_NAME) exec mailhog MailHog bcrypt ${ARG}` > mailhog/auth.file 
