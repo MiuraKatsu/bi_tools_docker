@@ -1,2 +1,3 @@
 metabase/metabase/*
 mysql/mysql_data/*
+.ipynb_checkpoints
