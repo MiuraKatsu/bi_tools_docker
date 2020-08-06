@@ -1,19 +1,5 @@
 version: '3'
 services:
-  jupyter:
-    restart       : always
-    build         : ./jupyter
-    hostname      : 'jupyter'
-    container_name: 'jupyter'
-    working_dir   : '/opt/jupyter'
-    tty           : true
-    volumes       :
-      - ~/.ssh:/root/.ssh
-      - ./jupyter/notebook:/opt/jupyter
-    ports         :
-      - "8888:8888"
-    command       : jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token='' --port=8888
-
   metabase:
     image         : metabase/metabase
     hostname      : 'metabase'
@@ -23,12 +9,21 @@ services:
     ports:
       - "3000:3000"
 
+  jupyter:
+    build         : ./jupyter
+    hostname      : 'jupyter'
+    container_name: 'jupyter'
+    volumes       :
+      - ~/.ssh:/home/jovyan/.ssh
+    ports         :
+      - "8888:8888"
+    command       : jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token='' --port=8888
+
   mysql:
     image         : mysql:5.7
     hostname      : 'mysql'
     container_name: 'mysql'
     volumes:
-      - ./mysql/mysql.conf.d:/etc/mysql/mysql.conf.d/
       - ./mysql/mysql_data:/var/lib/mysql
       - ./mysql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
     environment:
@@ -43,6 +38,3 @@ services:
     container_name: mailhog
     ports:
       - "8025:8025"
-    volumes       :
-      - ./mailhog/auth.file:/auth.file
-    command       : -auth-file=/auth.file

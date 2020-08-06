@@ -1,4 +1,5 @@
 import sqlalchemy
+import pandas as pd
 
 mysql_user     = 'root'
 mysql_passwd   = 'password'
